@@ -17,8 +17,6 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [message, setMessage] = useState({})
   const [newBlogVisible, setNewBlogVisible] = useState(false)
-  
-
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -28,31 +26,29 @@ const App = () => {
       blogService.setToken(user.token)
       showMessage('login successful')
     }
-    blogService.getAll().then(blogs =>{
+    blogService.getAll().then(blogs => {
       setBlogs( blogs )
-    }
-     
-    )  
+    })
   }, [])
 
 
   const showMessage = (message,type='info') => {
-    setMessage({message:message,type:type})
-        setTimeout(() => {
-          setMessage({})
-        }, 5000)
+    setMessage({ message:message,type:type })
+    setTimeout(() => {
+      setMessage({})
+    }, 5000)
   }
 
   const handleLogin = async (e) => {
     e.preventDefault()
     try{
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
       setUser(user)
       blogService.setToken(user.token)
 
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
-      ) 
+      )
 
       showMessage('login successful')
 
@@ -78,7 +74,6 @@ const App = () => {
         }
       }catch(e){
         showMessage('unauthorized', 'error')
-        
       }
     }
   }
@@ -88,12 +83,12 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
   }
 
-  const handleNewBlog = async(e) =>{
+  const handleNewBlog = async(e) => {
     e.preventDefault()
     const blogObj = {
-      "title": title,
-      "url": url,
-      "author": author
+      'title': title,
+      'url': url,
+      'author': author
     }
     try{
       const response = await blogService.create(blogObj)
@@ -105,56 +100,47 @@ const App = () => {
     }catch(e){
       showMessage('create blog failed', 'error')
     }
-    
   }
 
-const loginForm = () => {
-  const handleUsernameChange = event => setUsername(event.target.value)
-  const handlePasswordChange = event => setPassword(event.target.value)
-  return (
-    <LoginForm
-      username={username}
-      password={password}
-      handleLogin={handleLogin}
-      handleUsernameChange={handleUsernameChange}
-      handlePasswordChange={handlePasswordChange}
-    />
-  )
-
-
-}
+  const loginForm = () => {
+    const handleUsernameChange = event => setUsername(event.target.value)
+    const handlePasswordChange = event => setPassword(event.target.value)
+    return (
+      <LoginForm
+        username={username}
+        password={password}
+        handleLogin={handleLogin}
+        handleUsernameChange={handleUsernameChange}
+        handlePasswordChange={handlePasswordChange}
+      />
+    )
+  }
 
 
 
-const newBlog = () =>{
+  const newBlog = () => {
 
-  const hideWhenVisible = { display: newBlogVisible ? 'none' : '' }
-  const showWhenVisible = { display: newBlogVisible ? '' : 'none' }
+    const hideWhenVisible = { display: newBlogVisible ? 'none' : '' }
+    const showWhenVisible = { display: newBlogVisible ? '' : 'none' }
 
-  return(
-    <div>
-      <div style={hideWhenVisible}>
-        <button onClick={e => setNewBlogVisible(true)} >new blog</button>
+    return(
+      <div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setNewBlogVisible(true)} >new blog</button>
+        </div>
+        <div style={showWhenVisible}>
+          <NewBlogForm
+            handleSubmit={handleNewBlog}
+            handleTitleChange={e => setTitle(e.target.value)}
+            handleAuthorChange={e => setAuthor(e.target.value)}
+            handleUrlChange={e => setUrl(e.target.value)}
+            title={title}
+            author={author}
+            url={url}/>
+          <button onClick={() => setNewBlogVisible(false)} >cancel</button>
+        </div>
       </div>
-      <div style={showWhenVisible}>
-        <NewBlogForm 
-          handleSubmit={handleNewBlog} 
-          handleTitleChange={e => setTitle(e.target.value)}
-          handleAuthorChange={e => setAuthor(e.target.value)}
-          handleUrlChange={e => setUrl(e.target.value)}
-          title={title}
-          author={author}
-          url={url}/>
-          <button onClick={e => setNewBlogVisible(false)} >cancel</button>
-      </div>
-    </div>
-  )
-}
-
-  const handleBlogVisible = (e) => {
-    const updateBlog = blogs.find(blog => blog.id === e.target.value)
-    updateBlog.visible = !updateBlog.visible
-    setBlogs(blogs.map(obj =>  obj.id === updateBlog.id? updateBlog : obj))
+    )
   }
 
   const handleLike = async(e) => {
@@ -180,12 +166,12 @@ const newBlog = () =>{
       }
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} 
-              blog={blog} 
-              handleBlogVisible={handleBlogVisible} 
-              handleLike={handleLike}
-              handleDeleteBlog={handleDeleteBlog} 
-              loginUser={user?.id}
+        <Blog
+          key={blog.id}
+          blog={blog}
+          handleLike={handleLike}
+          handleDeleteBlog={handleDeleteBlog}
+          loginUser={user?.id}
         />
       )}
     </div>

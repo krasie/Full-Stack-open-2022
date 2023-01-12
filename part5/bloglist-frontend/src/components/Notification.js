@@ -1,4 +1,4 @@
-const Notification = ({message,type}) => {
+const Notification = ({ message,type }) => {
   if(message){
     return (
       <>
@@ -6,7 +6,7 @@ const Notification = ({message,type}) => {
       </>
     )
   }else{
-    return null;
+    return null
   }
 }
 
