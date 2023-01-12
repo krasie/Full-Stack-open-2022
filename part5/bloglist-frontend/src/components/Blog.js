@@ -40,7 +40,7 @@ const Blog = forwardRef((props,ref) => {
       <div>{props.blog.title} <button onClick={toggleBlogVisible} value={props.blog.id}>{buttonShow}</button></div>
       <div style={visible}>
         <div style={visible}>{props.blog.url}</div>
-        <div style={visible}>{props.blog.likes} <button onClick={props.handleLike} value={props.blog.id}>like</button></div>
+        <div style={visible}><span className='like-num'>{props.blog.likes}</span><button className='like' onClick={props.handleLike} value={props.blog.id}>like</button></div>
         <div>{props.blog.author}</div>
         <div><button onClick={props.handleDeleteBlog} value={props.blog.id} style={delelteBottonnVisible}>delete</button></div>
       </div>

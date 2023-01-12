@@ -36,5 +36,37 @@ describe('Blog app', function() {
 
       cy.contains('success')
     })
+
+    describe('When logged in', function() {
+      beforeEach(function() {
+        cy.login({ username: 'mluukkai', password: 'salainen' })
+      })
+
+      it('A blog can be created', function() {
+        cy.get('#new-blog').click()
+        cy.get('#title').type('new title')
+        cy.get('#url').type('http://localhost:1334')
+        cy.get('#author').type('Ben')
+        cy.get('#create-blog').click()
+
+        cy.contains('new title')
+        cy.contains('show').click()
+        cy.contains('Ben')
+        cy.contains('http://localhost:1334')
+      })
+
+      it('like click', function() {
+        cy.createBlog({ title:'title1',author:'Ben',url:'http://localhost:1334' })
+        cy.createBlog({ title:'title2',author:'Ben',url:'http://localhost:1334' })
+        cy.createBlog({ title:'title3',author:'Ben',url:'http://localhost:1334' })
+
+        cy.contains('title1').find('button').click().as('theButton')
+        cy.get('@theButton').parent().parent().find('.like').click()
+        cy.get('.like-num').should('contain','1')
+      })
+
+    })
+
+    
   })
 })

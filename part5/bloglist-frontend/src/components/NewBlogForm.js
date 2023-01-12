@@ -26,6 +26,7 @@ const NewBlogForm = forwardRef((props,ref) => {
             <input
               type="text"
               name="title"
+              id='title'
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder='title'
@@ -36,6 +37,7 @@ const NewBlogForm = forwardRef((props,ref) => {
             <input
               type="text"
               name="author"
+              id='author'
               value={author}
               onChange={e => setAuthor(e.target.value)}
               placeholder='author'
@@ -46,12 +48,13 @@ const NewBlogForm = forwardRef((props,ref) => {
             <input
               type="text"
               name="url"
+              id='url'
               value={url}
               onChange={e => setUrl(e.target.value)}
               placeholder='url'
             />
           </div>
-          <button type="submit">Create Blog</button>
+          <button type="submit" id='create-blog'>Create Blog</button>
         </div>
       </form>
     </div>
