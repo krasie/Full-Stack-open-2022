@@ -36,7 +36,7 @@ const Blog = forwardRef((props,ref) => {
   })
 
   return(
-    <div style={ blogStyle }>
+    <div style={ blogStyle } className='blog'>
       <div>{props.blog.title} <button onClick={toggleBlogVisible} value={props.blog.id}>{buttonShow}</button></div>
       <div style={visible}>
         <div style={visible}>{props.blog.url}</div>

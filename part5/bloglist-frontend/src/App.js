@@ -144,7 +144,7 @@ const App = () => {
     const res = await blogService.update(updateBlog)
     console.log(res)
     if(res.status === 200) {
-      setBlogs(blogs.map(obj =>  obj.id === res.data.id? res.data : obj))
+      setBlogs(blogs.map(obj =>  obj.id === res.data.id? res.data : obj).sort((a, b) => b.likes - a.likes))
 
     }
   }
