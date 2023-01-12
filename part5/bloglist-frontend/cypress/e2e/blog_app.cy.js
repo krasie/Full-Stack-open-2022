@@ -9,21 +9,32 @@ describe('Blog app', function() {
     cy.request('POST', 'http://localhost:3003/api/users/', user)
   })
 
-  it('login fails with wrong password', function() {
+  it('Login form is show',() => {
     cy.visit('http://localhost:3000')
-    cy.get('#username').type('mluukkai')
-    cy.get('#password').type('wrong')
-    cy.get('#login-btn').click()
-
-    cy.contains('username or password is incorrect')
+    cy.get('#username')
+    cy.get('#password')
+    cy.get('#login-btn')
   })
 
-  it('Login form is shown', function() {
-    cy.visit('http://localhost:3000')
-    cy.get('#username').type('mluukkai')
-    cy.get('#password').type('salainen')
-    cy.get('#login-btn').click()
+  describe('Login',function() {
 
-    cy.contains('success')
+    it('login fails with wrong password', function() {
+      cy.visit('http://localhost:3000')
+      cy.get('#username').type('mluukkai')
+      cy.get('#password').type('wrong')
+      cy.get('#login-btn').click()
+      cy.get('.error').should('contain', 'sername or password is incorrect')
+        .and('have.css', 'color', 'rgb(255, 0, 0)')
+
+    })
+
+    it('login success with correct password', function() {
+      cy.visit('http://localhost:3000')
+      cy.get('#username').type('mluukkai')
+      cy.get('#password').type('salainen')
+      cy.get('#login-btn').click()
+
+      cy.contains('success')
+    })
   })
 })

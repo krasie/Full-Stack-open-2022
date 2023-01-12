@@ -39,6 +39,7 @@
   "proxy": "http://localhost:3003",
   "devDependencies": {
     "@testing-library/user-event": "^14.4.3",
-    "cypress": "^12.3.0"
+    "cypress": "^12.3.0",
+    "eslint-plugin-cypress": "^2.12.1"
   }
 }
