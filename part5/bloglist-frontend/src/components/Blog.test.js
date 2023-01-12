@@ -43,8 +43,6 @@ test('show likes and url when click ', async() => {
     __v: 0
   }
 
-  const mockHandler = jest.fn()
-
   render(<Blog blog={blog} />)
 
   const user = userEvent.setup()
@@ -57,5 +55,27 @@ test('show likes and url when click ', async() => {
   const likes = screen.getByText(blog.likes)
   expect(likes).toBeDefined()
   expect(likes).toHaveStyle('display: block')
+})
+
+test('check two click events',async() => {
+  const blog = {
+    _id: '5a422a851b54a676234d17f7',
+    title: 'React patterns',
+    author: 'Michael Chan',
+    url: 'https://reactpatterns.com/',
+    userId:'639c36f9c7bd169fab014b6a',
+    likes: 7,
+    __v: 0
+  }
+
+  const handleLike = jest.fn()
+
+  render(<Blog blog={ blog } handleLike={handleLike} />)
+
+  const user = userEvent.setup()
+  const likeBtn = screen.getByText('like')
+  await user.click(likeBtn)
+  await user.click(likeBtn)
+  expect(handleLike.mock.calls).toHaveLength(2)
 
 })
