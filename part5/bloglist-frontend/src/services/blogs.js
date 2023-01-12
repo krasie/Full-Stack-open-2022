@@ -11,9 +11,6 @@ const setToken = newToken => {
 const getAll = async () => {
   const request = await axios.get(baseUrl)
   const data = request.data
-  data.forEach(e => {
-    e.visible=false
-  })
   data.sort((a, b) => {
     if(a.likes < b.likes){
       return 1

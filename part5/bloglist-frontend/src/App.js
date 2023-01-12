@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import NewBlogForm from './components/NewBlogForm'
@@ -12,9 +12,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [url, setUrl] = useState('')
-  const [author, setAuthor] = useState('')
   const [message, setMessage] = useState({})
   const [newBlogVisible, setNewBlogVisible] = useState(false)
 
@@ -30,6 +27,8 @@ const App = () => {
       setBlogs( blogs )
     })
   }, [])
+
+  const blogFormRef = useRef()
 
 
   const showMessage = (message,type='info') => {
@@ -86,16 +85,16 @@ const App = () => {
   const handleNewBlog = async(e) => {
     e.preventDefault()
     const blogObj = {
-      'title': title,
-      'url': url,
-      'author': author
+      'title': blogFormRef.current.title,
+      'url': blogFormRef.current.url,
+      'author': blogFormRef.current.author
     }
     try{
       const response = await blogService.create(blogObj)
       setBlogs(blogs.concat(response))
-      setTitle('')
-      setAuthor('')
-      setUrl('')
+      blogFormRef.current.setTitle('')
+      blogFormRef.current.setAuthor('')
+      blogFormRef.current.setUrl('')
       showMessage('blog created successfully')
     }catch(e){
       showMessage('create blog failed', 'error')
@@ -131,12 +130,8 @@ const App = () => {
         <div style={showWhenVisible}>
           <NewBlogForm
             handleSubmit={handleNewBlog}
-            handleTitleChange={e => setTitle(e.target.value)}
-            handleAuthorChange={e => setAuthor(e.target.value)}
-            handleUrlChange={e => setUrl(e.target.value)}
-            title={title}
-            author={author}
-            url={url}/>
+            ref={blogFormRef}
+          />
           <button onClick={() => setNewBlogVisible(false)} >cancel</button>
         </div>
       </div>
