@@ -65,6 +65,17 @@ describe('Blog app', function() {
         cy.get('.like-num').should('contain','1')
       })
 
+      it('delete blog', function() {
+        cy.createBlog({ title:'title1',author:'Ben',url:'http://localhost:1334' })
+        cy.createBlog({ title:'title2',author:'Ben',url:'http://localhost:1334' })
+        cy.createBlog({ title:'title3',author:'Ben',url:'http://localhost:1334' })
+
+        cy.visit('http://localhost:3000')
+
+        cy.contains('title1').find('button').click().as('theButton')
+        cy.get('@theButton').parent().parent().find('.del').click()
+      })
+
     })
 
     
