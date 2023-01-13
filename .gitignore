@@ -1,0 +1,8 @@
+**/node_modules
+**/.gitignore
+*.env
+*.md
+/part3/phonebook/.eslintignore
+/part3/phonebook/fly.toml
+/part3/phonebook/Dockerfile
+/part3/phonebook/.dockerignore
