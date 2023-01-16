@@ -21,8 +21,8 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const blogSlice = createSlice({
-  name: 'blogs',
+const anecdoteSlice = createSlice({
+  name: 'anecdote',
     initialState,
     reducers: {
       createAt(state, action){
@@ -40,10 +40,11 @@ const blogSlice = createSlice({
           ...anecdoteToChange,
           votes : anecdoteToChange.votes + 1
         }
+        
         return state.map(note => note.id !==  id ? note : changedAnecdotes).sort((a, b) => b.votes - a.votes)
-      }
+      },
     }
 })
 
-export const { createAt, handleVote } = blogSlice.actions
-export default blogSlice.reducer
+export const { createAt, handleVote } = anecdoteSlice.actions
+export default anecdoteSlice.reducer
