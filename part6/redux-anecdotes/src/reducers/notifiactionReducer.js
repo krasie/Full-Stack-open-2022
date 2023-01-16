@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = ''
+let setTimeoutID = ''
 
 const notificationsSlice = createSlice({
     name: 'notification',
@@ -18,9 +19,10 @@ const notificationsSlice = createSlice({
 })
 
 export const setNotification =   ( message, time = 5000 ) => {
+    clearTimeout(setTimeoutID)
     return async dispatch => {
         dispatch( showNotification(message) )
-        setTimeout(() => {
+        setTimeoutID = setTimeout(() => {
             dispatch( hiddenNotification() )
         }, time*1000 )
     }

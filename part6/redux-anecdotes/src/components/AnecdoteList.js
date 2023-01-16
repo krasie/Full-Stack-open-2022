@@ -14,7 +14,7 @@ const AnecdoteList = () => {
 
   const voteClick = (anecdote) => {
     dispatch(handleVote(anecdote))
-    dispatch(setNotification(`${anecdote.content} was voted successfully`,3))
+    dispatch(setNotification(`${anecdote.content} was voted successfully`))
   }
 
   return (
