@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { createAt } from '../reducers/anecdoteReducer'
+import { createAnecdote, createAt } from '../reducers/anecdoteReducer'
 import { showNotification } from '../reducers/notifiactionReducer'
 
 
@@ -7,11 +7,11 @@ const AnecdoteForm = () => {
 
   const dispatch = useDispatch()
 
-  const addAt = (e) => {
+  const addAt = async (e) => {
     e.preventDefault()
     const content = e.target.contact.value
     e.target.contact.value = ''
-    dispatch(createAt(content))
+    dispatch(createAnecdote(content))
     dispatch(showNotification(`${content} added`))
   }
   
